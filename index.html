@@ -4,41 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zakat Calculator</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .container { width: 80%; max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-        input { width: 100%; padding: 8px; margin: 10px 0; }
-        button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; }
-        button:hover { background: #218838; }
-        #result { font-weight: bold; margin-top: 10px; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h2>Zakat Calculator</h2>
-        <label>Cash & Savings (in your currency):</label>
-        <input type="number" id="cash" placeholder="Enter amount" />
+        <p>Calculate your zakat based on your assets and liabilities.</p>
         
+        <label>Cash & Savings:</label>
+        <input type="number" id="cash" placeholder="Enter amount">
+
         <label>Gold & Silver Value:</label>
-        <input type="number" id="gold" placeholder="Enter amount" />
-        
+        <input type="number" id="gold" placeholder="Enter amount">
+
         <label>Other Assets:</label>
-        <input type="number" id="other" placeholder="Enter amount" />
-        
+        <input type="number" id="assets" placeholder="Enter amount">
+
+        <label>Liabilities (Debts):</label>
+        <input type="number" id="liabilities" placeholder="Enter amount">
+
         <button onclick="calculateZakat()">Calculate Zakat</button>
-        <p id="result"></p>
+
+        <h3>Total Zakat Due: <span id="result">0</span></h3>
     </div>
 
     <script>
         function calculateZakat() {
-            let cash = parseFloat(document.getElementById("cash").value) || 0;
-            let gold = parseFloat(document.getElementById("gold").value) || 0;
-            let other = parseFloat(document.getElementById("other").value) || 0;
+            let cash = parseFloat(document.getElementById('cash').value) || 0;
+            let gold = parseFloat(document.getElementById('gold').value) || 0;
+            let assets = parseFloat(document.getElementById('assets').value) || 0;
+            let liabilities = parseFloat(document.getElementById('liabilities').value) || 0;
             
-            let totalWealth = cash + gold + other;
-            let zakat = totalWealth >= 613.35 ? totalWealth * 0.025 : 0; // Nisab threshold ($613.35 as example)
+            let totalAssets = cash + gold + assets - liabilities;
+            let nisab = 6140; // Example Nisab threshold in currency
             
-            document.getElementById("result").innerText = zakat > 0 ? `Your Zakat: ${zakat.toFixed(2)}` : "Zakat not required (below Nisab).";
+            let zakat = totalAssets >= nisab ? totalAssets * 0.025 : 0;
+            
+            document.getElementById('result').innerText = zakat.toFixed(2);
         }
     </script>
 </body>
