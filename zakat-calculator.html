@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zakat Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background: #218838; }
+        .result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Zakat Calculator</h2>
+        <label>Cash & Savings (in USD):</label>
+        <input type="number" id="cash" placeholder="Enter amount" required>
+
+        <label>Gold & Silver Value (in USD):</label>
+        <input type="number" id="gold" placeholder="Enter amount" required>
+
+        <label>Investments & Business Assets (in USD):</label>
+        <input type="number" id="investments" placeholder="Enter amount" required>
+
+        <label>Debts Owed (in USD):</label>
+        <input type="number" id="debts" placeholder="Enter amount" required>
+
+        <button onclick="calculateZakat()">Calculate Zakat</button>
+
+        <div class="result" id="zakatResult"></div>
+    </div>
+
+    <script>
+        function calculateZakat() {
+            var cash = parseFloat(document.getElementById('cash').value) || 0;
+            var gold = parseFloat(document.getElementById('gold').value) || 0;
+            var investments = parseFloat(document.getElementById('investments').value) || 0;
+            var debts = parseFloat(document.getElementById('debts').value) || 0;
+
+            var totalWealth = (cash + gold + investments) - debts;
+            var nisab = 5460; // Example nisab value based on gold price
+
+            if (totalWealth >= nisab) {
+                var zakatDue = totalWealth * 0.025;
+                document.getElementById('zakatResult').innerHTML = "Your Zakat due: $" + zakatDue.toFixed(2);
+            } else {
+                document.getElementById('zakatResult').innerHTML = "You are not required to pay Zakat.";
+            }
+        }
+    </script>
+</body>
+</html>
